@@ -1,0 +1,109 @@
+
+<!DOCTYPE html>
+<html>
+   <head>
+      <!-- STYLESHEET -->
+      <link rel="stylesheet" type="text/css" href="./static/css/main.css">
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+      <!-- JAVSCRIPT -->
+      <script src="./static/js/main.js"></script>
+   </head>
+   <body>
+      <div class="content">
+         <h1 class="title"> POKEMON CLASSIFIER APP DEMO </h1>
+         <form id="form" action = "http://localhost:5000/" method = "POST" 
+               enctype = "multipart/form-data">
+         <div class="image-box center">
+            {% if prediction == None %}
+            <!-- Show upload buttons if there is no prediction results yet. -->
+               <img id="upload-img" class="center" 
+                    src="./static/img/upload.png" width="100">
+               <label for="file-upload" class="center custom-button">
+                  <i class="fa fa-upload"></i> upload your image
+                  <input type="file" id="file-upload" name="image" onchange=submit() />
+               </label> 
+            {% else %}
+            <!-- Show prediction results. -->
+            {% for item in prediction %}
+            <li><img src="./static/{{ item }}"></img></li>
+            {% endfor %}
+            {% endif %}
+         </div>
+            {% if prediction != None %}
+            <!-- Show upload button for follow up predictions. -->
+               <label for="file-upload" class="center custom-button">
+                  <i class="fa fa-upload"></i> upload another image
+                  <input type="file" id="file-upload" name="image" onchange=submit() />
+               </label>
+            {% endif %}
+         </form>  
+      </div>
+   </body>
+</html>
+
+##css
+* {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box; 
+    font-family: 'Raleway', sans-serif;
+}
+
+body {
+    height: 100%;
+}
+
+h1, h2, h3, h4, h5, h6, p {
+    text-align: center;
+}
+
+.center {
+    display: block;
+    margin: auto;
+}
+
+.content {
+    padding: 50px;
+}
+
+/* ///////////////////////////////////////////////// */
+
+/* IMAGE BOX */
+
+.image-box {
+    border: #ababab solid 1px;
+    padding: 10px;
+    margin-top: 3em;
+    margin-bottom: 1em;
+    min-height: 25em;
+    max-width: 650px;
+    position: relative;
+}
+
+#upload-img {
+    margin-top: 6em;
+    margin-bottom: 1em;
+}
+
+/* RESULT TEXT */
+
+.result { 
+    padding-top: 11em;
+}
+
+/* UPLOAD FILE BUTTON */
+
+input[type="file"] {
+    display: none;
+}
+
+.custom-button {
+    color: white;
+    text-align: center;
+    background-color: #ababab;
+    padding: 6px 12px;
+    max-width: 200px;
+    cursor: pointer;
+}
